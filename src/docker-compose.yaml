@@ -1,0 +1,15 @@
+services:
+  librarium-db:
+    image: mcr.microsoft.com/mssql/server:latest
+    platform: linux/amd64
+    user: root
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1450:1433"
+    volumes:
+      - mssql-librarium:/var/opt/mssql
+
+volumes:
+  mssql-librarium:
