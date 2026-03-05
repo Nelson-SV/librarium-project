@@ -9,9 +9,9 @@ public class MemberController(MemberRepository memberRepository) : ControllerBas
 {
     [HttpGet]
     [Route("all-members")]
-    public async Task<IActionResult> GetMembers()
+    public async Task<IActionResult> GetMembersAsync()
     {
-        var members = await memberRepository.GetMembers();
+        var members = await memberRepository.GetMembersAsync();
     
         if (members.Count == 0)
         {

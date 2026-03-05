@@ -9,9 +9,9 @@ public class LoanController(LoanRepository loanRepository) : ControllerBase
 {
     [HttpGet]
     [Route("from-member/{memberId}")]
-    public async Task<IActionResult> GetLoanFromMember(string memberId)
+    public async Task<IActionResult> GetLoanFromMemberAsync(string memberId)
     {
-        var loans = await loanRepository.GetLoanFromMember(memberId);
+        var loans = await loanRepository.GetLoanFromMemberAsync(memberId);
     
         if (loans.Count == 0)
         {

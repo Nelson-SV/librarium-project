@@ -1,12 +1,10 @@
-namespace Librarium.Data.Entities;
+namespace Librarium.Api.Models.Dto.Response;
 
-public class Book
+public class BookWithAuthorsResponseDto
 {
     public string BookId { get; set; } = null!;
     public string Title { get; set; } = null!;
     public long Isbn { get; set; }
     public int PublicationYear { get; set; }
-
-    // Navigation property
-    public ICollection<BookAuthor> BookAuthors { get; set; } = [];
+    public List<AuthorResponseDto> Authors { get; set; }
 }

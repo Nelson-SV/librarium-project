@@ -6,7 +6,7 @@ namespace Librarium.Data.Repositories;
 
 public class LoanRepository(LibrariumDbContext dbContext)
 {
-    public async Task<List<Loan>> GetLoanFromMember(string memberId)
+    public async Task<List<Loan>> GetLoanFromMemberAsync(string memberId)
     {
         return await dbContext.Loans
             .Where(l => l.MemberId == memberId)
