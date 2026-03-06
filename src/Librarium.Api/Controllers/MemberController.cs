@@ -33,7 +33,7 @@ public class MemberController(MemberRepository memberRepository) : ControllerBas
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Email = dto.Email,
-            //PhoneNumber = dto.PhoneNumber,
+            PhoneNumber = dto.PhoneNumber,
         };
         
         var updated = await memberRepository.UpdateMemberAsync(member);
