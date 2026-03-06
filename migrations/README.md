@@ -22,5 +22,11 @@ Added the navigation property in the Book entity to be able to return the author
 To accomplish this and to also don't break the v1 controller/endpoint, I created DTO's models to handle the responses from the endpoints.
 This didn't have any effect in the actual database, only in the context snapshot.
 
+5 - Added a new migration in V005__add_member_email.sql.
+Added a new api endpoint to handle updates in members details.
+First we have to update the duplicated emails through the endpoint above.
+Once we don't have duplicated emails, we can add the migration and make the database update.
+
+
 
 

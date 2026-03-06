@@ -13,5 +13,12 @@ public class LibrariumDbContext : DbContext
     public DbSet<Loan> Loans { get; set; }
     public DbSet<Author> Author { get; set; }
     public DbSet<BookAuthor> BookAuthor { get; set; }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Member>()
+            .HasIndex(m => m.Email)
+            .IsUnique();
+    }
 
 }

@@ -10,4 +10,11 @@ public class MemberRepository(LibrariumDbContext dbContext)
     {
         return await dbContext.Members.ToListAsync();
     }
+
+    public async Task<Member> UpdateMemberAsync(Member member)
+    {
+        var updatedMember = dbContext.Members.Update(member).Entity;
+        await dbContext.SaveChangesAsync();
+        return updatedMember;
+    }
 }
