@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dotnet ef migrations script 20260306140349_AddMemberPhoneNumberAsNullable \
+dotnet ef migrations script 20260306141021_AddMemberPhoneNumberAsNonNullable \
   --project Librarium.Data \
   --startup-project Librarium.Api \
-  --output ../migrations/sql/V007__add_member_phone_number_as_non_nullable.sql
+  --output ../migrations/sql/V008__add_status_field_in_loan_as_nullable.sql

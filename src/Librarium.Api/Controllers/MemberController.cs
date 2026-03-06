@@ -25,20 +25,20 @@ public class MemberController(MemberRepository memberRepository) : ControllerBas
     
     [HttpPut]
     [Route("update-member-details")]
-    public async Task<IActionResult> UpdateMemberAsync(UpdateMemberDto dto)
+    public async Task<IActionResult> UpdateMemberAsync(UpdateMemberRequestDto requestDto)
     {
         var member = new Member
         {
-            MemberId =  dto.MemberId,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Email = dto.Email,
-            PhoneNumber = dto.PhoneNumber,
+            MemberId =  requestDto.MemberId,
+            FirstName = requestDto.FirstName,
+            LastName = requestDto.LastName,
+            Email = requestDto.Email,
+            PhoneNumber = requestDto.PhoneNumber,
         };
         
         var updated = await memberRepository.UpdateMemberAsync(member);
         
-        if(updated.MemberId != dto.MemberId)
+        if(updated.MemberId != requestDto.MemberId)
         {
             return NotFound();
         }

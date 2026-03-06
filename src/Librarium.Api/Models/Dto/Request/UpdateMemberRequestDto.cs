@@ -1,6 +1,6 @@
 namespace Librarium.Api.Models.Dto.Request;
 
-public class UpdateMemberDto
+public class UpdateMemberRequestDto
 {
     public string MemberId { get; set; } = null!;
     public string FirstName { get; set; } = null!;

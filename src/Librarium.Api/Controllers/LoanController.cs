@@ -1,3 +1,4 @@
+using Librarium.Api.Models.Dto.Response;
 using Librarium.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +14,20 @@ public class LoanController(LoanRepository loanRepository) : ControllerBase
     {
         var loans = await loanRepository.GetLoanFromMemberAsync(memberId);
     
-        if (loans.Count == 0)
+        var loanDtos = loans.Select(loan => new LoanResponseDto
+        {
+            LoanId = loan.LoanId,
+            BookTitle = loan.Book.Title,
+            LoanDate = loan.LoanDate,
+            ReturnDate = loan.ReturnDate
+        }).ToList();
+        
+        if (loanDtos.Count == 0)
         {
             return NotFound();
         }
     
-        return Ok(loans);
+        return Ok(loanDtos);
     }
     
     
@@ -26,7 +35,7 @@ public class LoanController(LoanRepository loanRepository) : ControllerBase
     [Route("create-loan")]
     public async Task<IActionResult> CreateLoan(string memberId, string bookId)
     {
-        var result = await loanRepository.CreateLoan(memberId, bookId);
+        var result = await loanRepository.CreateLoanAsync(memberId, bookId);
     
         if (result.BookId != bookId || result.MemberId != memberId)
         {

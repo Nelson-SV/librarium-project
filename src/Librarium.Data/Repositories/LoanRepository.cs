@@ -10,10 +10,11 @@ public class LoanRepository(LibrariumDbContext dbContext)
     {
         return await dbContext.Loans
             .Where(l => l.MemberId == memberId)
+            .Include(l => l.Book)
             .ToListAsync();
     }
 
-    public async Task<Loan> CreateLoan(string memberId, string bookId)
+    public async Task<Loan> CreateLoanAsync(string memberId, string bookId)
     {
         var loan = new Loan()
         {
@@ -27,5 +28,12 @@ public class LoanRepository(LibrariumDbContext dbContext)
         var result = await dbContext.Loans.AddAsync(loan);
 
         return result.Entity;
+    }
+
+    public async Task<Loan> UpdateLoanAsync(Loan loan)
+    {
+        var updatedLoan = dbContext.Loans.Update(loan).Entity;
+        await dbContext.SaveChangesAsync();
+        return updatedLoan;
     }
 }

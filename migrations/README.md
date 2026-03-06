@@ -36,5 +36,24 @@ This avoids a constraint failure that would occur if I tried to enforce NOT NULL
 
 7 - 
 
+- Add status (nullable) on loan (Active, Returned, Overdue and Lost)
+- Ran the migration
+- Added in the migration file (Up method):
+migrationBuilder.Sql("UPDATE Loans SET Status = 'Returned' WHERE ReturnDate IS NOT NULL");
+migrationBuilder.Sql("UPDATE Loans SET Status = 'Active' WHERE ReturnDate IS NULL");
+This populated the existing data to don't have null values.
+If the return date is null, the loan is valid, otherwise, it's returned.
+- Create Dto for v1/api/loans/{memberId} to just return:
+{
+"loanId": 4,
+"bookTitle": "The Pragmatic Programmer",
+"loanDate": "2024-09-01",
+"returnDate": null
+}
+- Create controller v2 to provide status information in the response.
+- 
+
+
+
 
 
