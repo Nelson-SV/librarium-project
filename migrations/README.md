@@ -34,25 +34,19 @@ Updated the existing data to have a phone number (through the update endpoint).
 Then applied the NOT NULL constraint (V007).
 This avoids a constraint failure that would occur if I tried to enforce NOT NULL on a column with existing rows containing no data.
 
-7 - 
-
-- Add status (nullable) on loan (Active, Returned, Overdue and Lost)
-- Ran the migration
-- Added in the migration file (Up method):
+7 - Added a new migration V008__add_status_field_in_loan_as_nullable.sql and V009__changed_status_field_in_loan_as_non_nullable.sql.
+First added status as nullable on loan (V008), to allow existing rows to remain valid during the transition. 
+And before running the migration, added a statement in the migration file (Up method) to update the status information of the existing data, with:
+```
 migrationBuilder.Sql("UPDATE Loans SET Status = 'Returned' WHERE ReturnDate IS NOT NULL");
 migrationBuilder.Sql("UPDATE Loans SET Status = 'Active' WHERE ReturnDate IS NULL");
-This populated the existing data to don't have null values.
-If the return date is null, the loan is valid, otherwise, it's returned.
-- Create Dto for v1/api/loans/{memberId} to just return:
-{
-"loanId": 4,
-"bookTitle": "The Pragmatic Programmer",
-"loanDate": "2024-09-01",
-"returnDate": null
-}
-- Create controller v2 to provide status information in the response.
-- 
+```
+If the return date is null, the loan is Active, otherwise, it's Returned.
+Created a Dto response for the first controller (v1) to return what the team is expecting. 
+Created a new controller and Dto (v2) to provide status information in the response.
+Made the second migration (V009) to change the status field to non-nullable, since we already have all the existing data with the status information.
 
+8 - 
 
 
 
