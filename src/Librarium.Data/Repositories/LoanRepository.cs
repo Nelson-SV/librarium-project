@@ -16,6 +16,14 @@ public class LoanRepository(LibrariumDbContext dbContext)
 
     public async Task<Loan> CreateLoanAsync(string memberId, string bookId)
     {
+        var book = await dbContext.Books.FindAsync(bookId);
+        
+        if (book == null)
+            throw new KeyNotFoundException("Book not found.");
+
+        if (book.IsDeleted)
+            throw new InvalidOperationException("Book is retired and cannot be loaned out.");
+        
         var loan = new Loan()
         {
             LoanId = new Guid().ToString(),

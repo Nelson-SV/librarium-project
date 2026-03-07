@@ -31,4 +31,18 @@ public class BookController(BookRepository bookRepository) : ControllerBase
         return Ok(booksResponse);
     }
     
+    [HttpPatch]
+    [Route("delete-book/{bookId}")]
+    public async Task<IActionResult> DeleteBookAsync(string bookId)
+    {
+        var isDeleted = await bookRepository.DeleteBookAsync(bookId);
+
+        if (!isDeleted)
+        {
+            return NotFound();
+        }
+
+        return Ok(isDeleted);
+    }
+    
 }

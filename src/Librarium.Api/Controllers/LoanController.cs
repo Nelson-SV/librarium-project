@@ -33,16 +33,21 @@ public class LoanController(LoanRepository loanRepository) : ControllerBase
     
     [HttpPost]
     [Route("create-loan")]
-    public async Task<IActionResult> CreateLoan(string memberId, string bookId)
+    public async Task<IActionResult> CreateLoanAsync(string memberId, string bookId)
     {
-        var result = await loanRepository.CreateLoanAsync(memberId, bookId);
-    
-        if (result.BookId != bookId || result.MemberId != memberId)
+        try
         {
-            return BadRequest();
+            var loan = await loanRepository.CreateLoanAsync(memberId, bookId);
+            return Ok(loan);
         }
-    
-        return Ok(result);
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     
 }

@@ -1,4 +1,3 @@
-using Librarium.Api.Models.Dto;
 using Librarium.Api.Models.Dto.Response;
 using Librarium.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -38,5 +37,19 @@ public class BookControllerV2(BookRepository bookRepository) : ControllerBase
         });
         
         return Ok(bookResponse);
+    }
+
+    [HttpPatch]
+    [Route("delete-book/{bookId}")]
+    public async Task<IActionResult> DeleteBookAsync(string bookId)
+    {
+        var isDeleted = await bookRepository.DeleteBookAsync(bookId);
+
+        if (!isDeleted)
+        {
+            return NotFound();
+        }
+
+        return Ok(isDeleted);
     }
 }

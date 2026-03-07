@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dotnet ef migrations script 20260306204756_AddStatusFieldInLoanAsNullable \
+dotnet ef migrations script 20260306212830_ChangedStatusFieldInLoanToNonNullable \
   --project Librarium.Data \
   --startup-project Librarium.Api \
-  --output ../migrations/sql/V009__changed_status_field_in_loan_as_non_nullable.sql
+  --output ../migrations/sql/V010__add_is_deleted_field_with_default_value_false.sql
