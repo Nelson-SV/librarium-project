@@ -1,4 +1,3 @@
-using Librarium.Api.Models.Dto;
 using Librarium.Api.Models.Dto.Response;
 using Librarium.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ public class BookController(BookRepository bookRepository) : ControllerBase
             return NotFound();
         }
         
-        var booksResponse = books.Select(b => new BookResponseDto
+        var booksResponse = books.Select(b => new BookResponseDtoV2
         {
             BookId = b.BookId,
             Title = b.Title,

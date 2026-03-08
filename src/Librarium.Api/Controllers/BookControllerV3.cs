@@ -8,11 +8,33 @@ namespace Librarium.Api.Controllers;
 
 
 [ApiController]
-[Route("api/v2/books")]
-public class BookControllerV2(BookRepository bookRepository) : ControllerBase
+[Route("api/v3/books")]
+public class BookControllerV3(BookRepository bookRepository) : ControllerBase
 {
     [HttpGet]
     [Route("all-books")]
+    public async Task<IActionResult> GetBooksAsync()
+    {
+        var books = await bookRepository.GetBooksAsync();
+        
+        if (books.Count == 0)
+        {
+            return NotFound();
+        }
+        
+        var booksResponse = books.Select(b => new BookResponseDtoV2
+        {
+            BookId = b.BookId,
+            Title = b.Title,
+            Isbn = b.Isbn,
+            PublicationYear = b.PublicationYear,
+        });
+        
+        return Ok(booksResponse);
+    }
+    
+    [HttpGet]
+    [Route("books-with-authors")]
     public async Task<IActionResult> GetBooksWithAuthorsAsync()
     {
         var books = await bookRepository.GetBooksWithAuthorsAsync();
@@ -39,20 +61,6 @@ public class BookControllerV2(BookRepository bookRepository) : ControllerBase
         });
         
         return Ok(bookResponse);
-    }
-
-    [HttpPatch]
-    [Route("delete-book/{bookId}")]
-    public async Task<IActionResult> DeleteBookAsync(string bookId)
-    {
-        var isDeleted = await bookRepository.DeleteBookAsync(bookId);
-
-        if (!isDeleted)
-        {
-            return NotFound();
-        }
-
-        return Ok(isDeleted);
     }
     
     [HttpPatch]
@@ -85,5 +93,19 @@ public class BookControllerV2(BookRepository bookRepository) : ControllerBase
         };
         
         return Ok(response);
+    }
+    
+    [HttpPatch]
+    [Route("delete-book/{bookId}")]
+    public async Task<IActionResult> DeleteBookAsync(string bookId)
+    {
+        var isDeleted = await bookRepository.DeleteBookAsync(bookId);
+
+        if (!isDeleted)
+        {
+            return NotFound();
+        }
+
+        return Ok(isDeleted);
     }
 }

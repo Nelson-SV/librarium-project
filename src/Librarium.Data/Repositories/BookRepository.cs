@@ -35,4 +35,10 @@ public class BookRepository(LibrariumDbContext dbContext)
         return true;
     }
 
+    public async Task<Book> UpdateBookAsync(Book book)
+    {
+        var updatedBook = dbContext.Books.Update(book).Entity;
+        await dbContext.SaveChangesAsync();
+        return updatedBook;
+    }
 }
