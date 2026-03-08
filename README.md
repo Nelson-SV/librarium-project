@@ -33,6 +33,7 @@ dotnet run
 
 
 Project Structure:
-- /src                  → Application source code
-- /migrations/sql       → SQL migration artifacts (one file per migration)
-- /migrations/README.md → Migrations log 
+- /src                     → Application source code
+- /migrations/sql          → SQL migration artifacts (one file per migration)
+- /migrations/README.md    → Migrations log not following the suggested structure (but contains everything that is required)
+- /migrations/READMEV2.md  → Migrations log considering the suggested structure (Made with AI based on my initial log (README.md)) 
